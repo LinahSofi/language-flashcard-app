@@ -1,0 +1,25 @@
+{% extends 'flashcards/base.html' %}
+
+{% block title %}All Decks{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Available Decks</h2>
+
+{% if decks %}
+<div class="row">
+    {% for deck in decks %}
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ deck.name }}</h5>
+                <a href="{% url 'deck_detail' deck.id %}" class="btn btn-primary">View Deck</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No decks available.</p>
+{% endif %}
+
+{% endblock %}
