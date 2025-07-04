@@ -1,0 +1,11 @@
+from django.contrib.auth.decorators import login_required
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def add_deck(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        if name:
+            Deck.objects.create(name=name, user=request.user)  # ✅ Link to user
+            return redirect('home')
+    return render(request, 'flashcards/add_deck.html')

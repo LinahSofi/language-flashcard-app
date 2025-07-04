@@ -1,98 +1,74 @@
 # Language Flashcard App
 
-A Django-based web app for creating and reviewing language flashcards. Users can create decks, add flashcards, and later track their learning progress. This app is built as a capstone project for the Full-Stack Engineering Bootcamp at Cal State University.
+A Django-based app that helps users create flashcards to study any language.
 
-> **Work In Progress** — Core features are in place. More functionality (review mode, charts, auth) coming soon.
+## Features
 
----
+- ✅ User Authentication (Signup / Login / Logout)
+- ✅ Deck CRUD (Create, View, Edit, Delete)
+- ✅ Flashcard CRUD (Add, Edit, Delete)
+- ✅ Review Mode with Flip UI (HTML/CSS/JS)
+- ✅ Track “I Knew This” vs “Needs Review”
+- ✅ Session-based performance tracking
+- ✅ Chart.js progress chart
+- ✅ Bootstrap 5 Styling
+- ✅ Navbar, breadcrumbs, and flash messages
+- ✅ User-linked decks (each user sees only their own)
+- ✅ Fully configured for deployment
 
-## User Story
+## Tech Stack
 
-1.	As a language learner,
-I want to create flashcard decks for different topics or languages,
-So that I can organize my vocabulary by category.
-2.	As a student,
-I want to add new flashcards with a front (question/word) and back (answer/translation),
-So that I can actively review and memorize information.
-3.	As a daily learner,
-I want to view and manage all my flashcards in one place,
-So that I can build consistent study habits and track my progress.
+- Python 3.8+
+- Django 4.2
+- SQLite (local dev)
+- Bootstrap 5
+- JavaScript
+- Chart.js
 
-Future enhancements will allow:
-- Tracking review history and progress
-- Logging in to access personal decks
-- Practicing cards via flip animations
+## 🧪 Setup Instructions
 
----
+```bash
+# Clone the repo
+git clone https://github.com/LinahSofi/language-flashcard-app.git
+cd language-flashcard-app
 
-## Project Structure
-language-flashcard-app/
-├── flashcard_project/       # Django project config
-├── flashcards/              # Flashcards app (models, views, templates)
-│   ├── templates/
-│   │   └── flashcards/
-│   │       ├── base.html
-│   │       ├── home.html
-│   │       ├── deck_detail.html
-│   │       └── add_flashcard.html
-├── db.sqlite3               # Local SQLite database
-├── manage.py
-└── README.md
+# Set up virtual environment
+python -m venv env
+source env/bin/activate
 
----
+# Install dependencies
+pip install -r requirements.txt
 
-## Features Implemented (Day 1)
+# Set up environment variables
+touch .env
 
-- [x] Project planning (user stories, wireframes)
-- [x] Django project + app setup
-- [x] Models: `Deck` and `Flashcard`
-- [x] Admin panel enabled
-- [x] View decks and flashcards
-- [x] Add flashcard via form
-- [x] Basic styling with Bootstrap
-- [x] GitHub repo created and pushed ✅
+SECRET_KEY=your-django-secret
+DEBUG=False
 
----
+# Apply migrations and collect static files
+python manage.py migrate
+python manage.py collectstatic
 
-## Upcoming Features
+# Start the server
+python manage.py runserver
 
-- [ ] Flashcard review/flip mode
-- [ ] Edit/delete flashcards
-- [ ] User login and personalization
-- [ ] Charted learning progress
-- [ ] Responsive UI enhancements
+Environment Variables
+	•	SECRET_KEY: Your Django secret key
+	•	DEBUG: Should be False in production
 
----
+Deployment
+	•	Uses a Procfile and .env file for deployment to Render.com
+	•	STATIC_ROOT is configured for collectstatic
+	•	python-decouple used to hide secrets
 
-## Screenshots
+User Stories
+	1.	As a language learner, I want to create decks for different topics or languages.
+	2.	As a user, I want to flip flashcards to test myself and track what I know.
+	3.	As a user, I want to log in to save my decks and review progress securely.
 
-*(To be added in later updates)*
+📸 Screenshots
+Added later 
 
----
-
-## Getting Started
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/LinahSofi/language-flashcard-app.git
-   cd language-flashcard-app
-
-## Credits
-
-Created by Linah Sofi
-Capstone Project — Full-Stack Engineering Bootcamp, Cal State University
-
-## Timeline
-
-June 27
-Planning, models, views
-Done
-
-June 27
-GitHub repo + README setup
-Done
-
-June 28+
-CRUD, UI, auth, charts
-In Progress
+👩🏻‍💻 Author
+Linah Sofi
 

@@ -1,0 +1,18 @@
+{% extends 'flashcards/base.html' %}
+
+{% block title %}Delete Flashcard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-danger">🗑️ Delete Flashcard</h2>
+
+<div class="card p-4 shadow-sm">
+  <p>Are you sure you want to delete this flashcard from <strong>{{ deck.name }}</strong>?</p>
+  <p><strong>{{ flashcard.front }}</strong>: {{ flashcard.back }}</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'deck_detail' deck.id %}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>
+{% endblock %}

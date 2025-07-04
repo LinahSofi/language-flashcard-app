@@ -1,0 +1,127 @@
+{% extends 'flashcards/base.html' %}
+
+{% block title %}Review: {{ deck.name }}{% endblock %}
+
+{% block content %}
+<h2>🃏 Review: {{ deck.name }}</h2>
+
+{% if flashcards %}
+<div id="card-box" class="card text-center shadow p-4 mb-4">
+    <div id="card-text" class="fs-4">{{ flashcards.0.front }}</div>
+    <button onclick="flipCard()" class="btn btn-secondary mt-3">🔁 Flip</button>
+</div>
+
+<div class="d-flex justify-content-between mb-3">
+    <button onclick="prevCard()" class="btn btn-outline-primary">← Previous</button>
+    <button onclick="nextCard()" class="btn btn-outline-primary">Next →</button>
+</div>
+
+<div class="text-center mb-4">
+    <button onclick="markKnown()" class="btn btn-success me-2">✅ I Knew This</button>
+    <button onclick="markNeedsReview()" class="btn btn-danger">❌ Needs Review</button>
+</div>
+
+<!-- ✅ Chart container -->
+<div class="mt-5">
+    <h4>Your Progress</h4>
+    <canvas id="reviewChart" width="400" height="200"></canvas>
+</div>
+
+<!-- ✅ Serialize flashcards JSON -->
+{{ flashcards|json_script:"fcards" }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const flashcards = JSON.parse(document.getElementById('fcards').textContent);
+    let index = 0;
+    let showingFront = true;
+    let reviewStats = {};  // Track known/review status
+
+    const cardText = document.getElementById('card-text');
+
+    function flipCard() {
+        showingFront = !showingFront;
+        updateCard();
+    }
+
+    function nextCard() {
+        if (index < flashcards.length - 1) {
+            index++;
+            showingFront = true;
+            updateCard();
+        }
+    }
+
+    function prevCard() {
+        if (index > 0) {
+            index--;
+            showingFront = true;
+            updateCard();
+        }
+    }
+
+    function updateCard() {
+        const card = flashcards[index];
+        cardText.textContent = showingFront ? card.front : card.back;
+    }
+
+    function markKnown() {
+        reviewStats[index] = "known";
+        nextCard();
+        updateChart();
+    }
+
+    function markNeedsReview() {
+        reviewStats[index] = "needs_review";
+        nextCard();
+        updateChart();
+    }
+
+    function updateChart() {
+        const knownCount = Object.values(reviewStats).filter(v => v === 'known').length;
+        const reviewCount = Object.values(reviewStats).filter(v => v === 'needs_review').length;
+
+        chart.data.datasets[0].data = [knownCount, reviewCount];
+        chart.update();
+    }
+
+    window.addEventListener("beforeunload", () => {
+        fetch("{% url 'review_flashcards' deck.id %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify(reviewStats)
+        });
+    });
+
+    // ✅ Render chart on load
+    const ctx = document.getElementById('reviewChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Known', 'Needs Review'],
+            datasets: [{
+                label: '# of Cards',
+                data: [0, 0],
+                backgroundColor: ['#28a745', '#dc3545']
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    });
+
+</script>
+{% else %}
+<p>No flashcards to review.</p>
+{% endif %}
+
+<a href="{% url 'deck_detail' deck.id %}" class="btn btn-link mt-4">← Back to Deck</a>
+{% endblock %}

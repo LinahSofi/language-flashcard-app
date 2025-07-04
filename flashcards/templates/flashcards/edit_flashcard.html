@@ -1,0 +1,21 @@
+{% extends 'flashcards/base.html' %}
+
+{% block title %}Edit Flashcard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">✏️ Edit Flashcard in "{{ deck.name }}"</h2>
+
+<form method="POST" class="card p-4 shadow-sm">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="front" class="form-label">Front</label>
+    <input type="text" name="front" id="front" class="form-control" value="{{ flashcard.front }}" required>
+  </div>
+  <div class="mb-3">
+    <label for="back" class="form-label">Back</label>
+    <textarea name="back" id="back" rows="3" class="form-control" required>{{ flashcard.back }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+  <a href="{% url 'deck_detail' deck.id %}" class="btn btn-secondary ms-2">← Cancel</a>
+</form>
+{% endblock %}

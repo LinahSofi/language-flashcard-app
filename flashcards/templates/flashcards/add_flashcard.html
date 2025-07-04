@@ -1,20 +1,21 @@
 {% extends 'flashcards/base.html' %}
 
-{% block title %}Add Flashcard to {{ deck.name }}{% endblock %}
+{% block title %}Add Flashcard{% endblock %}
 
 {% block content %}
-<h2>Add Flashcard to "{{ deck.name }}"</h2>
-<form method="POST">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="front" class="form-label">Front (Question)</label>
-        <input type="text" class="form-control" id="front" name="front" required>
-    </div>
-    <div class="mb-3">
-        <label for="back" class="form-label">Back (Answer)</label>
-        <textarea class="form-control" id="back" name="back" rows="3" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Add Flashcard</button>
-    <a href="{% url 'deck_detail' deck.id %}" class="btn btn-secondary">Cancel</a>
+<h2 class="mb-4">➕ Add Flashcard to "{{ deck.name }}"</h2>
+
+<form method="POST" class="card p-4 shadow-sm">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="front" class="form-label">Front (e.g. Word or Question)</label>
+    <input type="text" name="front" id="front" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="back" class="form-label">Back (e.g. Translation or Answer)</label>
+    <textarea name="back" id="back" rows="3" class="form-control" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">💾 Save Flashcard</button>
+  <a href="{% url 'deck_detail' deck.id %}" class="btn btn-secondary ms-2">← Cancel</a>
 </form>
 {% endblock %}

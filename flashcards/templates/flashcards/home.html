@@ -5,21 +5,28 @@
 {% block content %}
 <h2 class="mb-4">Available Decks</h2>
 
-{% if decks %}
-<div class="row">
-    {% for deck in decks %}
-    <div class="col-md-4 mb-3">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">{{ deck.name }}</h5>
-                <a href="{% url 'deck_detail' deck.id %}" class="btn btn-primary">View Deck</a>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
-{% else %}
-<p>No decks available.</p>
-{% endif %}
+{% if user.is_authenticated %}
+  <a href="{% url 'add_deck' %}" class="btn btn-success mb-4">➕ Add New Deck</a>
 
+  {% if decks %}
+    <div class="row">
+      {% for deck in decks %}
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ deck.name }}</h5>
+            <a href="{% url 'deck_detail' deck.id %}" class="btn btn-primary">View Deck</a>
+            <a href="{% url 'edit_deck' deck.id %}" class="btn btn-warning btn-sm mt-2">✏️ Edit</a>
+            <a href="{% url 'delete_deck' deck.id %}" class="btn btn-danger btn-sm mt-2">🗑️ Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No decks available.</p>
+  {% endif %}
+{% else %}
+  <p>Please <a href="{% url 'login' %}">log in</a> to access your flashcard decks.</p>
+{% endif %}
 {% endblock %}
