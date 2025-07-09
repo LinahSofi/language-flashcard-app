@@ -25,7 +25,80 @@ A Django-based app that helps users create flashcards to study any language.
 - JavaScript
 - Chart.js
 
-## 🧪 Setup Instructions
+
+## Wireframe 
+🏠 Home (Deck List View)
++-------------------------------+
+|       Navigation Bar         |
+|-----------------------------|
+|    [Create New Deck]        |
+|                             |
+|  ▸ Deck 1   [Edit] [Delete] |
+|  ▸ Deck 2   [Edit] [Delete] |
+|  ▸ Deck 3   [Edit] [Delete] |
++-----------------------------+
+
+📄 Deck Detail (Flashcard List View)
++-------------------------------+
+|        Deck: Travel Arabic      |
+|-----------------------------|
+|  [Add New Flashcard]        |
+|                             |
+|  Front: أهلا            |
+|  Back: Hello                |
+|  [Edit] [Delete]            |
++-----------------------------+
+
+🧠 Study Mode (Flip UI)
++-------------------------------+
+|      Flashcard Study         |
+|-----------------------------|
+|    ┌─────────────┐           |
+|    │   أهلا       │           |
+|    └─────────────┘           |
+|                             |
+|  [Flip]   [I Knew This]     |
+|          [Needs Review]     |
++-----------------------------+
+
+## State Tree
+{
+  "user": {
+    "isAuthenticated": true,
+    "username": "linah"
+  },
+  "decks": [
+    {
+      "id": 1,
+      "name": "Arabic Colors",
+      "flashcards": [
+        { "id": 1, "front": "أزرق", "back": "blue", "status": "known" },
+        { "id": 2, "front": "أحمر", "back": "red", "status": "review" }
+      ]
+    }
+  ],
+  "studySession": {
+    "currentDeckId": 1,
+    "currentIndex": 0,
+    "known": 3,
+    "review": 2
+  }
+}
+
+## Componants List
+	Navbar – included on every page
+	DeckListView – list all decks for the logged-in user
+	DeckDetailView – list all flashcards for a deck
+	DeckFormView – create/edit deck
+	FlashcardFormView – create/edit flashcards
+	StudyView – flip UI with I Knew This / Needs Review buttons
+	ChartView – renders session performance via Chart.js
+	LoginView / SignupView / LogoutView – user authentication
+	Flash Messages – success/error feedback
+
+	
+
+## Setup Instructions
 
 ```bash
 # Clone the repo
