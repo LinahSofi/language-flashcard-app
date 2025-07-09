@@ -66,8 +66,12 @@ User Stories
 	2.	As a user, I want to flip flashcards to test myself and track what I know.
 	3.	As a user, I want to log in to save my decks and review progress securely.
 
-📸 Screenshots
-Added later 
+## 🌐 Live Demo
+
+🔗 [Click here to view the live app on Render](https://language-flashcard-app.onrender.com)
+
+> Deployed using Render.com. App may take a few seconds to load on first visit.
+
 
 👩🏻‍💻 Author
 Linah Sofi
